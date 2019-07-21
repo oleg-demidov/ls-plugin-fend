@@ -8,6 +8,13 @@ class PluginFend_ModuleUser_EntityUser extends PluginFend_Inherits_ModuleUser_En
     public function Init() {
         parent::Init();
         
-        $this->PluginProperty_Property_AttachUserBehavior($this);
+        $this->AttachUserBehavior();
+    }
+    
+    public function AttachUserBehavior() {
+        $this->AttachBehavior('contacts', [
+            'class' => PluginProperty_ModuleProperty_BehaviorEntity::class,
+            'target_type' => 'contacts'
+        ]);
     }
 }
