@@ -45,7 +45,7 @@ class PluginFend extends Plugin
         $aFields = array(
             array(
                 'data'=>array(
-                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_VARCHAR,
+                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_URL,
                     'title'=>'Сайт',
                     'code'=>'site',
                     'sort'=>100
@@ -62,7 +62,7 @@ class PluginFend extends Plugin
             ),
             array(
                 'data'=>array(
-                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_VARCHAR,
+                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_URL,
                     'title'=>'ВКонтакте',
                     'code'=>'vkontakte',
                     'sort'=>100
@@ -79,7 +79,7 @@ class PluginFend extends Plugin
             ),
             array(
                 'data'=>array(
-                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_VARCHAR,
+                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_URL,
                     'title'=>'Facebook',
                     'code'=>'facebook',
                     'sort'=>100
@@ -96,7 +96,7 @@ class PluginFend extends Plugin
             ),
             array(
                 'data'=>array(
-                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_VARCHAR,
+                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_URL,
                     'title'=>'Instagram',
                     'code'=>'instagram',
                     'sort'=>100
@@ -113,7 +113,7 @@ class PluginFend extends Plugin
             ),
             array(
                 'data'=>array(
-                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_VARCHAR,
+                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_URL,
                     'title'=>'Twitter',
                     'code'=>'twitter',
                     'sort'=>100
@@ -130,7 +130,7 @@ class PluginFend extends Plugin
             ),
             array(
                 'data'=>array(
-                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_VARCHAR,
+                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_URL,
                     'title'=>'Youtube',
                     'code'=>'youtube',
                     'sort'=>100

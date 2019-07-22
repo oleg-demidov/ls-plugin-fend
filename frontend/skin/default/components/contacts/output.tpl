@@ -17,7 +17,7 @@
 {if $site} 
     <div class="mr-3 ">
         <a class="link text-muted" href="{$site}">
-            {component "bs-icon" icon="link:s"} {$site}
+            {component "bs-icon" icon="link:s"} {$site|regex_replace:"/^https?\:\/\//":""}
         </a>
     </div>
 {/if}
