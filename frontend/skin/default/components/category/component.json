@@ -1,0 +1,8 @@
+{
+    "name": "category",
+    "version": "1.0.0",
+    
+    "templates": {
+        "input": "input.tpl"
+    }
+}

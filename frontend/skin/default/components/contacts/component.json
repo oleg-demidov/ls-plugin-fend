@@ -1,0 +1,12 @@
+{
+    "name": "contacts",
+    "version": "1.0.0",
+    
+    "templates": {
+        "input": "input.tpl",
+        "output": "output.tpl"
+    },
+    "styles": {
+        "contacts": "css/contacts.css"
+    }
+}
