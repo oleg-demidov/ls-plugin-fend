@@ -147,6 +147,9 @@ class PluginFend extends Plugin
             )
         );
         $this->PluginProperty_Property_CreateDefaultTargetPropertyFromPlugin($aFields, 'contacts');
+        
+        $this->Category_CreateTargetType('user_category', 'Люди');
+        $this->Category_CreateTargetType('company_category', 'Компании');
         return true;
     }
 
