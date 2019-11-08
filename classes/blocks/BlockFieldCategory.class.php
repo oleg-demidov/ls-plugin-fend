@@ -32,7 +32,22 @@ class PluginFend_BlockFieldCategory extends Block
      */
     public function Exec()
     {
-        $oBehavior = $this->GetParam('behavior');
+        
+        $user = $this->GetParam('user');
+
+        if($this->Rbac_IsRole($user, 'user')){
+            $user->AttachBehavior('category', [
+                'class' => 'ModuleCategory_BehaviorEntity',
+                'target_type' => 'user_category'
+            ]);
+        }else{
+            $user->AttachBehavior('category', [
+                'class' => 'ModuleCategory_BehaviorEntity',
+                'target_type' => 'company_category'
+            ]);
+        }
+        
+        $oBehavior = $user->category;
         
         /**
          * Нужное нам поведение - получаем список текущих категорий
@@ -42,18 +57,15 @@ class PluginFend_BlockFieldCategory extends Block
          * Загружаем параметры
          */
         $aParams = $oBehavior->getParams();
-        $this->Viewer_Assign('params', array_merge($aParams, $this->GetParam('params', [])), true);
+        $this->Viewer_Assign('params', array_merge($aParams, $this->GetParam('params', [])));
         /**
          * Загружаем список доступных категорий
          */
-        
-        $categoryType = $this->
-        $aCategories = $this->Category_GetCategoryItemsByFilter(
-                
-                $oBehavior->getCategoryTargetType()
-                );
+        $categoryType = $this->Category_GetTypeByTargetType($oBehavior->getCategoryTargetType());
 
-        $this->Viewer_Assign('categories', $aCategories , true);
+        $aCategories = $this->Category_LoadTreeOfCategory(array('type_id' => $categoryType->getId()));
+
+        $this->Viewer_Assign('aCategories', $aCategories );
 
 
         $this->SetTemplate('component@fend:category.input');

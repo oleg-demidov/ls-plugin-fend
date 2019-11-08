@@ -17,17 +17,5 @@ class PluginFend_ModuleUser_EntityUser extends PluginFend_Inherits_ModuleUser_En
             'target_type' => 'contacts'
         ]);
         
-        
-        if($this->isRole('user')){
-            $this->AttachBehavior('category', [
-                'class' => 'ModuleCategory_BehaviorEntity',
-                'target_type' => 'user_category'
-            ]);
-        }else{
-            $this->AttachBehavior('category', [
-                'class' => 'ModuleCategory_BehaviorEntity',
-                'target_type' => 'company_category'
-            ]);
-        }
     }
 }

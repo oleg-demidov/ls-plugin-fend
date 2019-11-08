@@ -13,8 +13,8 @@
     
    
         {insert name="block" block="fieldCategory" params=[
-            plugin => 'fend',
-            behavior => $behavior
+            plugin   => 'fend',
+            user     => $userProfile
         ]}
     
 {/block}
