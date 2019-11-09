@@ -1,12 +1,11 @@
  
-
 {$itemsAccordeon = []}
 
 {foreach $aCategories as $category}
     {capture name="item_content"}
         <div class="d-flex">
             {foreach $category->getChildren() as $categoryChild1}
-                <div>
+                <div class="p-2">
                     <strong>
                         {$categoryChild1->getTitle()}
                     </strong>
@@ -26,10 +25,11 @@
     {/capture}
 
     {$itemsAccordeon[] = [
-        classes => "p-1",
-        text => "{$category->getTitle()}{component 'bs-badge' classes='ml-1' bmods='primary' text=2}",
+        classesHeader => "p-1",
+        attributes => ['data-category-branch' => true],
+        text => "{$category->getTitle()}{component 'bs-badge' attributes=['data-badge'=>true] classes='ml-1' bmods='primary' text=''}",
         content => $smarty.capture.item_content 
     ]}
 {/foreach}
 
-{component "bs-collapse.accordion" items=$itemsAccordeon}
+{component "bs-collapse.accordion" attributes=['data-category'=>true] items=$itemsAccordeon}

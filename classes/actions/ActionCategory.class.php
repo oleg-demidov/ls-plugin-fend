@@ -31,6 +31,9 @@ class PluginFend_ActionCategory extends Action{
     public function Init()
     {
         $this->oUserProfile = $this->User_GetUserByLogin(Router::GetActionEvent());
+        
+        $this->Component_Add('fend:category');
+        $this->Viewer_AppendScript(Plugin::GetTemplatePath(__CLASS__) . 'assets/js/init.js');
     }
 
     public function EventSettings() {

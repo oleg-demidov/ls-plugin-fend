@@ -4,5 +4,10 @@
     
     "templates": {
         "input": "input.tpl"
+    },
+    "scripts":{
+        "branch":"js/branch.js",
+        "category":"js/category.js"
+        
     }
 }
