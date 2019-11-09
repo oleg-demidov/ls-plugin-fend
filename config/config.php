@@ -16,4 +16,6 @@ $config['$root$']['block']['settingsCategory'] = array(
     )
 );
 
+$config['counе_allow_branch'] = 1; //Максимальное количество направлений профессий
+
 return $config;

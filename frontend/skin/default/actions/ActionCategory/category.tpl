@@ -11,12 +11,19 @@
 
 {block 'layout_content'}
     
-   
+    <form method="POST">
         {insert name="block" block="fieldCategory" params=[
             plugin   => 'fend',
             user     => $userProfile
         ]}
-    
+        
+        {component "bs-button"
+            type    = "submit"
+            bmods   = "primary"
+            classes = "mt-2"
+            text    = {lang "common.save"}
+        }
+    </form>
 {/block}
 
 

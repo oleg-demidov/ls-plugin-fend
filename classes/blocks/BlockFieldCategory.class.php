@@ -35,24 +35,21 @@ class PluginFend_BlockFieldCategory extends Block
         
         $user = $this->GetParam('user');
 
-        if($this->Rbac_IsRole($user, 'user')){
-            $user->AttachBehavior('category', [
-                'class' => 'ModuleCategory_BehaviorEntity',
-                'target_type' => 'user_category'
-            ]);
-        }else{
-            $user->AttachBehavior('category', [
-                'class' => 'ModuleCategory_BehaviorEntity',
-                'target_type' => 'company_category'
-            ]);
-        }
+        $user->AttachCategoryBehavior();
         
         $oBehavior = $user->category;
         
         /**
          * Нужное нам поведение - получаем список текущих категорий
          */
-        $this->Viewer_Assign('categoriesSelected', $oBehavior->getCategories(), true);
+        $aCategories = [];
+        foreach ($oBehavior->getCategories() as $category) 
+        {
+            $aCategories[] = $category->getId();
+        }
+        $this->Viewer_Assign('categoriesSelected', $aCategories);
+        
+        
         /**
          * Загружаем параметры
          */

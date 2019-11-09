@@ -55,15 +55,14 @@
         _create: function () {
             this._super();
             
-            this.elements.checkboxes.on( 'change', this.onchange.bind(this));
+            this._on(this.elements.checkboxes, {change: 'change'});
         },
         
-        onchange: function(event){
+        change: function(event){
+
+            this._trigger('change', event);
             
-            this.element.trigger('onchange', event);
-            console.log(event);
             this.calcBadge();
-            
         },
         
         calcBadge: function(){

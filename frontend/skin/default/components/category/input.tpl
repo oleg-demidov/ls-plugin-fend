@@ -12,9 +12,12 @@
                     <div class="ml-2 mt-2">
                         {foreach $categoryChild1->getChildren() as $categoryChild2}
                             {component "bs-form.checkbox" 
-                                custom = true
+                                name        = "{$params.form_field}[]"
+                                value       = $categoryChild2->getId()
+                                custom      = true
+                                checked     = (in_array($categoryChild2->getId(), $categoriesSelected))
                                 classesGroup = "custom-checkbox" 
-                                label   = $categoryChild2->getTitle()}
+                                label       = $categoryChild2->getTitle()}
                             
                         {/foreach}
                     </div>

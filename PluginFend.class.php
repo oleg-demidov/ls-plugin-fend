@@ -26,10 +26,9 @@ class PluginFend extends Plugin
     
     public function Init()
     {
-//        $this->Lang_AddLangJs([
-//            'plugin.subscribe.subscribe.text.subscribe',
-//            'plugin.subscribe.subscribe.text.unsubscribe'
-//        ]);
+        $this->Lang_AddLangJs([
+            'plugin.fend.category.msg.allow_count_branch'
+        ]);
 
 //        $this->Component_Add('subscribe:subscribe');
         

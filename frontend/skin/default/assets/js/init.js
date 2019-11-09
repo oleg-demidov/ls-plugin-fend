@@ -1,6 +1,8 @@
 
 jQuery(document).ready(function($){
-    $('[data-category]').fendCategory();
+    $('[data-category]').fendCategory({
+        countAllowBranch: ls.registry.get('countAllowBranch')
+    });
 
 });
 

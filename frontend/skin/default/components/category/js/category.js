@@ -36,10 +36,11 @@
             
             multiple: true,
             
-            countAllowBranch:3,
+            countAllowBranch:1,
             
 
             i18n: {
+                countAllow: "@plugin.fend.category.msg.allow_count_branch"
             },
 
             // Доп-ые параметры передаваемые в аякс запросах
@@ -59,16 +60,20 @@
             
             this.elements.branch.fendCategoryBranch();
             
-            this.elements.branch.on( 'onchange', this.change.bind(this));
+            this._on(this.elements.branch, {change: 'change'});
             
             this.elements.branch.fendCategoryBranch('calcBadge');
             
         },
                 
-        change: function(e, event){
-            console.log(event)
-            console.log(this.getActiveBranch().length)
-            event.stopPropagation()
+        change: function(eventBranch){
+            let target = eventBranch.originalEvent.target;
+
+            if(this.getActiveBranch().length > this.option('countAllowBranch')){
+                $(target).prop('checked', false);
+                this.elements.branch.fendCategoryBranch('calcBadge');
+                ls.msg.error(this._i18n('countAllow', {count: this.option('countAllowBranch')}));
+            }
         },
         
         getActiveBranch: function(){
