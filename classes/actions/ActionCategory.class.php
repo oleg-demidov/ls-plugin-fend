@@ -42,9 +42,14 @@ class PluginFend_ActionCategory extends Action{
         
         $this->oUserProfile->AttachCategoryBehavior();
         
-        if (isPost()) {
-            $this->oUserProfile->setCategories(getRequest('categories')); 
+        $this->Menu_Get('settings')->setActiveItem('category');
+        $this->SetTemplateAction('category');
+        
+        if (!isPost()) {
+            return;
         }
+        
+        $this->oUserProfile->setCategories(getRequest('categories')); 
         
         if($this->oUserProfile->_Validate(['categories'])){
             if($this->oUserProfile->Save()){ 
@@ -53,9 +58,6 @@ class PluginFend_ActionCategory extends Action{
         }else{
             $this->Message_AddError($this->oUserProfile->_getValidateError());
         }
-        
-        $this->Menu_Get('settings')->setActiveItem('category');
-        $this->SetTemplateAction('category');      
         
         
     }
