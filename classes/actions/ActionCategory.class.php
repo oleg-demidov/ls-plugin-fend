@@ -35,23 +35,29 @@ class PluginFend_ActionCategory extends Action{
         
     }
 
-    public function EventSettings() {
+    public function EventSettings() 
+    {
         if(!$this->oUserProfile ){
             return $this->EventNotFound();
         }
         
-        $this->oUserProfile->AttachCategoryBehavior();
-        
+        if($this->Rbac_IsRole($this->oUserProfile, 'user')){
+            $behavior = $this->oUserProfile->user_category;
+        }else{
+            $behavior = $this->oUserProfile->company_category;
+        } 
+       
         $this->Menu_Get('settings')->setActiveItem('category');
         $this->SetTemplateAction('category');
+        $this->Viewer_Assign('behavior', $behavior);
         
         if (!isPost()) {
             return;
         }
         
-        $this->oUserProfile->setCategories(getRequest('categories')); 
+        $this->oUserProfile->_setData([$behavior->getParam('form_field') => getRequest($behavior->getParam('form_field'))]); 
         
-        if($this->oUserProfile->_Validate(['categories'])){
+        if($this->oUserProfile->_Validate([$behavior->getParam('form_field')])){
             if($this->oUserProfile->Save()){ 
                 $this->Message_AddNotice($this->Lang_Get('common.success.save'));
             }
@@ -62,11 +68,11 @@ class PluginFend_ActionCategory extends Action{
         
     }
     
-    public function EventShutdown() {
-        $this->Component_Add('fend:category');
-        $this->Viewer_AppendScript(Plugin::GetTemplatePath(__CLASS__) . 'assets/js/init.js');
+    public function EventShutdown() 
+    {
+        
+        
         $this->Viewer_AssignJs('countAllowBranch', Config::Get('plugin.fend.counе_allow_branch'));
         $this->Viewer_Assign('userProfile', $this->oUserProfile);
-        $this->Viewer_Assign('behavior', $this->oUserProfile->category);
     }
 }

@@ -19,9 +19,9 @@ class PluginFend extends Plugin
         'entity' => [
             'ModuleUser_EntityUser' => '_ModuleUser_EntityUser'
         ],
-//        'module' => [
-//            'ModuleUser' => '_ModuleUser'
-//        ]
+        'module' => [
+            'ModuleUser' => '_ModuleUser'
+        ]
     ];
     
     public function Init()
@@ -30,8 +30,9 @@ class PluginFend extends Plugin
             'plugin.fend.category.msg.allow_count_branch'
         ]);
 
-//        $this->Component_Add('subscribe:subscribe');
-        
+        $this->Component_Add('fend:category');
+        $this->Component_Add('fend:search');
+        $this->Viewer_AppendScript(Plugin::GetTemplatePath(__CLASS__) . 'assets/js/init.js');
         
     }
 

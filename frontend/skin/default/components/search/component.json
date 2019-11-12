@@ -1,0 +1,11 @@
+{
+    "name": "search",
+    "version": "1.0.0",
+    
+    "templates": {
+        "search": "search.tpl"
+    },
+    "scripts":{
+        "search":"js/search.js"
+    }
+}

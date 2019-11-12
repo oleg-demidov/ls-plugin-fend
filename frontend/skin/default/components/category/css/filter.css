@@ -1,0 +1,15 @@
+.btn-arrow .fa-chevron-right{
+    display: none;
+}
+
+.btn-arrow .fa-chevron-down{
+    display: inline-block;
+}
+
+.btn-arrow.collapsed i.fa-chevron-down{
+    display: none;
+}
+
+.btn-arrow.collapsed i.fa-chevron-right{
+    display: inline-block;
+}

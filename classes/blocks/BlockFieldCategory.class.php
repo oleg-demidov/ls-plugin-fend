@@ -35,9 +35,11 @@ class PluginFend_BlockFieldCategory extends Block
         
         $user = $this->GetParam('user');
 
-        $user->AttachCategoryBehavior();
-        
-        $oBehavior = $user->category;
+        if($this->Rbac_IsRole($user, 'user')){
+            $oBehavior = $user->user_category;
+        }else{
+            $oBehavior = $user->company_category;
+        }        
         
         /**
          * Нужное нам поведение - получаем список текущих категорий

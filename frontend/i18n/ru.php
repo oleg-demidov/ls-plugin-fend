@@ -7,5 +7,23 @@ return [
         'msg' => [
             'allow_count_branch' => 'Максимальное количество профессий %%count%%'
         ]
+    ],
+    "search" => [
+        'title' => [
+            'user' => 'Люди',
+            'company' => 'Компании'
+        ],
+        'form' => [
+            'geo' => [
+                'placeholder' => 'Вся Россия'
+            ],
+            'category' => [
+                'placeholder' => 'Категория',
+                'modal_title' => 'Категория'
+            ],
+            'submit' => [
+                'text' => 'Показать'
+            ]
+        ]
     ]
 ];

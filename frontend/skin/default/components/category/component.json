@@ -3,11 +3,16 @@
     "version": "1.0.0",
     
     "templates": {
-        "input": "input.tpl"
+        "input": "input.tpl",
+        "filter": "filter.tpl"
     },
     "scripts":{
         "branch":"js/branch.js",
-        "category":"js/category.js"
+        "category":"js/category.js",
+        "filter":"js/filter.js"
         
+    },
+    "styles":{
+        "filter":"css/filter.css"
     }
 }
