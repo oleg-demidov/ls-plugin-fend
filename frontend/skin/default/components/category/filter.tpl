@@ -19,7 +19,7 @@
     
     
     
-    <input type="hidden" disabled name="category" data-category-value value="{$id}">
+    <input type="hidden" {if !$id}disabled{/if} name="category" data-category-value value="{$id}">
 
     {capture name="accordion"}
 

@@ -39,10 +39,12 @@ class PluginFend_ActionPeople extends Action
 
         $sUrlRedirect = $this->sCurrentAction . '/';
         
+        $this->Logger_Notice(print_r($_REQUEST, true));
+        
         if($city = $this->PluginGeo_Geo_GetCityById(getRequest('geo')['city'])){
             $sUrlRedirect .= $city->getCode();
         }else{
-            $sUrlRedirect .= 'all-city/';
+            $sUrlRedirect .= 'all-city';
         }
         
         if(getRequest('category')){
@@ -69,6 +71,19 @@ class PluginFend_ActionPeople extends Action
         }else{
             $sRole = 'company';
         }
+        
+        $iLimit = Config::Get('module.user.search.per_page');
+                
+        $iPage = getRequest('page');
+        $iPage = $iPage?$iPage:1;
+        
+        $aFilter = [
+            '#index-from'   => 'id',
+            '#page'         => [$iPage, $iLimit],
+            '#with'         => ["#{$sRole}_category", '#geo'],
+            'activate'      => 1,
+            'role'          => $sRole
+        ];
                 
         $sCodeCity = $this->sCurrentEvent;
         
@@ -101,19 +116,6 @@ class PluginFend_ActionPeople extends Action
             $this->Viewer_Assign('sText', getRequest('text'));
         }
         
-        $iLimit = Config::Get('module.user.search.per_page');
-                
-        $iPage = getRequest('page');
-        $iPage = $iPage?$iPage:1;
-        
-        $aFilter = [
-            '#index-from'   => 'id',
-            '#page'         => [$iPage, $iLimit],
-            '#with'         => ["#{$sRole}_category", '#geo'],
-            'activate'      => 1,
-            'role'          => $sRole
-        ];
-       
         $aUsers = $this->User_GetUserItemsByFilter($aFilter);
                 
         $aPaging = $this->Viewer_MakePaging(
@@ -149,7 +151,7 @@ class PluginFend_ActionPeople extends Action
             ];
         }
         
-        if(getRequest('geo')){
+        if(getRequest('geo') and getRequest('geo')['city']){
             $aFilter['#geo'] = getRequest('geo');
         }
         
@@ -157,9 +159,7 @@ class PluginFend_ActionPeople extends Action
             $aFilter['#' . getRequest('role') . '_category'] = [getRequest('category')];
         }
         
-        $this->Logger_Notice(print_r($aFilter, true));
-       
-        $iCount = $this->User_GetUserItemsByFilter($aFilter);
+        $iCount = $this->User_GetCountFromUserByFilter($aFilter);
         
         $this->Viewer_AssignAjax('count', $iCount);
     }
