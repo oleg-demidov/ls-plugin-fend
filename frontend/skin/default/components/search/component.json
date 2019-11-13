@@ -3,9 +3,11 @@
     "version": "1.0.0",
     
     "templates": {
-        "search": "search.tpl"
+        "search": "search.tpl",
+        "results": "results.tpl"
     },
     "scripts":{
-        "search":"js/search.js"
+        "search":"js/search.js",
+        "results": "js/results.js"
     }
 }

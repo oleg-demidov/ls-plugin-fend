@@ -27,9 +27,9 @@
                 geo:               '.js-geo-input',
                 category:          '[data-category-input]',
                 count:             '[data-count-find]',
-                countWrapper:      '[data-count-wrapper]'
+                countWrapper:      '[data-count-wrapper]',
+                results:           '@[data-people-results]'
             }
-            
 
         },
 
@@ -49,6 +49,8 @@
             this._on(this.elements.category, {change: "change"});
             
             this.mark();
+            
+            this.elements.results.fendResults();
         },
         
         mark: function(){
