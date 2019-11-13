@@ -19,10 +19,11 @@
 
     </div>
     {component 'bs-pagination' 
-            total   = $aPaging['iCountPage'] 
-            padding = 2
-            showPager=true
-            classes = "mt-3"
-            current= $aPaging['iCurrentPage']  
-            url="{$aPaging['sBaseUrl']}{$aPaging['sGetParams']}&page=__page__" }
+        attributes  = [ "data-type" => "pagination"]
+        total   = $aPaging['iCountPage'] 
+        padding = 2
+        showPager=true
+        classes = "mt-3"
+        current= $aPaging['iCurrentPage']  
+        url="{$aPaging['sBaseUrl']}{$aPaging['sGetParams']}&page=__page__" }
 {/block}

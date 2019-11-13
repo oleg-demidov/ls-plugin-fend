@@ -39,16 +39,15 @@ class PluginFend_ActionPeople extends Action
 
         $sUrlRedirect = $this->sCurrentAction . '/';
         
-        $this->Logger_Notice(print_r($_REQUEST, true));
-        
         if($city = $this->PluginGeo_Geo_GetCityById(getRequest('geo')['city'])){
             $sUrlRedirect .= $city->getCode();
-        }else{
-            $sUrlRedirect .= 'all-city';
         }
         
         if(getRequest('category')){
             $category = $this->Category_GetCategoryById(getRequest('category'));
+            if (!$city) {
+                $sUrlRedirect .= 'all-city';
+            }
             $sUrlRedirect .= '/' . $category->getUrlFull();
         }
         

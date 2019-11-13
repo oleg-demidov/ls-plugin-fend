@@ -75,7 +75,7 @@
                 }
                 this.elements.countWrapper.addClass('d-flex');
                 this.elements.count.text(response.count)
-            }, {showProgress:false})
+            }, {showProgress:false, lock:false})
         }
         
        
