@@ -91,6 +91,8 @@ class PluginFend_ActionPeople extends Action
         if($city = $this->PluginGeo_Geo_GetCityByCode($sCodeCity)){
             $aFilter['#geo'] = ['city' => $city->getId()];
             $this->Viewer_Assign('city', $city);
+            
+            $this->PluginSeo_Seo_SetVar('city', $city->getName());
         }
         
         if($this->GetParam(0)){
@@ -101,6 +103,8 @@ class PluginFend_ActionPeople extends Action
             $aFilter["#{$sRole}_category"] = [$category->getId()];
             
             $this->Viewer_Assign('category', $category);
+            
+            $this->PluginSeo_Seo_SetVar('category', $category->getTitle());
             
         }
         
@@ -205,6 +209,7 @@ class PluginFend_ActionPeople extends Action
             
             $this->Viewer_Assign('category', $category);
             
+            
         }
         
         if(getRequest('text')){
@@ -238,5 +243,6 @@ class PluginFend_ActionPeople extends Action
         $this->Viewer_AssignAjax('html', $viewer->Fetch('component@fend:search.results'));
         
     }
+    
           
 }

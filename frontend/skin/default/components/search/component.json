@@ -4,7 +4,8 @@
     
     "templates": {
         "search": "search.tpl",
-        "results": "results.tpl"
+        "results": "results.tpl",
+        "item": "item.tpl"
     },
     "scripts":{
         "search":"js/search.js",

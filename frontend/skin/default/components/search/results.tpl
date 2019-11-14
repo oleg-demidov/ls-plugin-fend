@@ -1,6 +1,6 @@
 <div class="mt-5">
     {foreach $aUsers as $oUser}
-        {component "user.item" oUser=$oUser}
+        {component "fend:search.item" oUser=$oUser}
     {/foreach}
 
     {if !$aUsers}

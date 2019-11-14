@@ -17,10 +17,12 @@ class PluginFend extends Plugin
         
     protected $aInherits = [
         'entity' => [
-            'ModuleUser_EntityUser' => '_ModuleUser_EntityUser'
+            'ModuleUser_EntityUser' => '_ModuleUser_EntityUser',
+            'ModuleCategory_EntityCategory' => '_ModuleCategory_EntityCategory'
         ],
         'module' => [
-            'ModuleUser' => '_ModuleUser'
+            'ModuleUser' => '_ModuleUser',
+            'ModuleCategory' => '_ModuleCategory'
         ]
     ];
     
@@ -156,7 +158,7 @@ class PluginFend extends Plugin
             'Поиск людей и компаний',
             'people',
             [
-                'geo',
+                'city',
                 'category'
             ]
         );
