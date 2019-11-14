@@ -34,6 +34,7 @@ class PluginFend extends Plugin
         $this->Component_Add('fend:search');
         $this->Viewer_AppendScript(Plugin::GetTemplatePath(__CLASS__) . 'assets/js/init.js');
         
+        
     }
 
     public function Activate()
@@ -150,6 +151,17 @@ class PluginFend extends Plugin
         
         $this->Category_CreateTargetType('user_category', 'Люди');
         $this->Category_CreateTargetType('company_category', 'Компании');
+        
+        $this->PluginSeo_Seo_AddRule(
+            'Поиск людей и компаний',
+            'people',
+            [
+                'geo',
+                'category'
+            ]
+        );
+        
+        
         return true;
     }
 
