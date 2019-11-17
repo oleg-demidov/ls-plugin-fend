@@ -158,8 +158,12 @@ class PluginFend extends Plugin
             'Поиск людей и компаний',
             'people',
             [
-                'city',
-                'category'
+                'city_title',
+                'city_description',
+                'city_keywords',
+                'category_title',
+                'category_description',
+                'category_keywords'
             ]
         );
         

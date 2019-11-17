@@ -88,23 +88,29 @@ class PluginFend_ActionPeople extends Action
                 
         $sCodeCity = $this->sCurrentEvent;
         
-        if($city = $this->PluginGeo_Geo_GetCityByCode($sCodeCity)){
+        $city = $this->PluginGeo_Geo_GetCityByFilter([
+            'code' => $sCodeCity,
+            '#with' => ['#seo']
+        ]);
+                
+        if($city){
             $aFilter['#geo'] = ['city' => $city->getId()];
             $this->Viewer_Assign('city', $city);
             
-            $this->PluginSeo_Seo_SetVar('city', $city->getName());
         }
         
         if($this->GetParam(0)){
             $sUrl = join('/', $this->GetParams());
             
-            $category = $this->Category_GetCategoryByUrlFull($sUrl);
+            $category = $this->Category_GetCategoryByFilter([
+                'url_full' => $sUrl,
+                '#with' => ['#seo']
+            ]);
             
             $aFilter["#{$sRole}_category"] = [$category->getId()];
             
             $this->Viewer_Assign('category', $category);
             
-            $this->PluginSeo_Seo_SetVar('category', $category->getTitle());
             
         }
         
