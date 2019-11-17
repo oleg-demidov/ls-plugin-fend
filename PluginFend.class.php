@@ -36,6 +36,7 @@ class PluginFend extends Plugin
         $this->Component_Add('fend:search');
         $this->Viewer_AppendScript(Plugin::GetTemplatePath(__CLASS__) . 'assets/js/init.js');
         
+       
         
     }
 

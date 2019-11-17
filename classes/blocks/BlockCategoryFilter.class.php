@@ -48,7 +48,7 @@ class PluginFend_BlockCategoryFilter extends Block
                 if ($oBehavior->getParam('target_type') != $sTargetType) {
                     continue;
                 }
-                
+               
                 $this->Viewer_Assign('category', $aCategory);
 
                 /**
@@ -60,9 +60,9 @@ class PluginFend_BlockCategoryFilter extends Block
                  * Загружаем список доступных категорий
                  */
                 $categoryType = $this->Category_GetTypeByTargetType($oBehavior->getCategoryTargetType());
-
+                
+                
                 $aCategories = $this->Category_LoadTreeOfCategory(array('type_id' => $categoryType->getId()));
-
                 $this->Viewer_Assign('aCategories', $aCategories );
 
 

@@ -16,14 +16,16 @@ class PluginFend_ModuleUser_EntityUser extends PluginFend_Inherits_ModuleUser_En
             'class'         => 'ModuleCategory_BehaviorEntity',
             'target_type'   => 'user_category',
             'form_field'    => 'user_categories',
-            'multiple'      => true
+            'multiple'      => true,
+            'validate_on'   => ['change_category', 'profile_settings']
         ];
         
         $this->aBehaviors['company_category'] = [
             'class'         => 'ModuleCategory_BehaviorEntity',
             'target_type'   => 'company_category',
             'form_field'    => 'company_categories',
-            'multiple'      => true
+            'multiple'      => true,
+            'validate_on'   => ['change_category', 'profile_settings']
         ];
         
         $this->aBehaviors['contacts'] = [

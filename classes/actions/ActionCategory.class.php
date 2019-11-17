@@ -55,6 +55,8 @@ class PluginFend_ActionCategory extends Action{
             return;
         }
         
+        $this->oUserProfile->_setValidateScenario('change_category');
+        
         $this->oUserProfile->_setData([$behavior->getParam('form_field') => getRequest($behavior->getParam('form_field'))]); 
         
         if($this->oUserProfile->_Validate([$behavior->getParam('form_field')])){
