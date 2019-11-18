@@ -5,7 +5,7 @@
     {capture name="item_content"}
         <div class="d-flex">
             {foreach $category->getChildren() as $categoryChild1}
-                <div class="p-2">
+                <div class="p-2" data-category-way>
                     <strong>
                         {$categoryChild1->getTitle()}
                     </strong>

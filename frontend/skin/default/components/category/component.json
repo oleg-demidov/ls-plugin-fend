@@ -7,10 +7,10 @@
         "filter": "filter.tpl"
     },
     "scripts":{
-        "branch":"js/branch.js",
-        "category":"js/category.js",
-        "filter":"js/filter.js"
-        
+        "branch":   "js/branch.js",
+        "category": "js/category.js",
+        "filter":   "js/filter.js",
+        "way":      "js/way.js"
     },
     "styles":{
         "filter":"css/filter.css"

@@ -1,7 +1,8 @@
 
 jQuery(document).ready(function($){
     $('[data-category]').fendCategory({
-        countAllowBranch: ls.registry.get('countAllowBranch')
+        countAllowBranch: ls.registry.get('countAllowBranch'),
+        countAllowWay   : ls.registry.get('countAllowWay')
     });
 
     $('[data-category-filter]').fendCategoryFilter();

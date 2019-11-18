@@ -5,7 +5,8 @@ return [
         'menu_item' => 'Категория',
         'title' => 'Настройка категории',
         'msg' => [
-            'allow_count_branch' => 'Максимальное количество профессий %%count%%'
+            'allow_count_branch' => 'Максимальное количество категорий %%count%%',
+            'allow_count_way' => 'Максимальное количество направлений %%count%%'
         ]
     ],
     "search" => [

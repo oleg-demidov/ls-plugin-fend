@@ -24,7 +24,7 @@
             // Селекторы
             selectors: {
                 text:              '[data-text-input]',
-                geo:               '.js-geo-input',
+                geo:               '[data-city] input',
                 category:          '[data-category-input]',
                 count:             '[data-count-find]',
                 countWrapper:      '[data-count-wrapper]',
@@ -42,7 +42,7 @@
         _create: function () {
             this._super();
             
-            this.elements.geo = $('.js-geo-input');
+            this.elements.geo = $(this.option('selectors.geo'));
             
             this._on(this.elements.text, {keyup: "change"});
             this._on(this.elements.geo, {change: "change"});

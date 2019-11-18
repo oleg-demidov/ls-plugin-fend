@@ -37,10 +37,12 @@
             multiple: true,
             
             countAllowBranch:1,
+            countAllowWay:3,
             
 
             i18n: {
-                countAllow: "@plugin.fend.category.msg.allow_count_branch"
+                countAllowBranch: "@plugin.fend.category.msg.allow_count_branch",
+                countAllowWay: "@plugin.fend.category.msg.allow_count_way"
             },
 
             // Доп-ые параметры передаваемые в аякс запросах
@@ -58,7 +60,12 @@
         _create: function () {
             this._super();
             
-            this.elements.branch.fendCategoryBranch();
+            this.elements.branch.fendCategoryBranch({
+                countAllowWay:this.option('countAllowWay'),
+                i18n: {
+                    countAllowWay: this._i18n('countAllowWay')
+                },
+            });
             
             this._on(this.elements.branch, {change: 'change'});
             
@@ -72,7 +79,7 @@
             if(this.getActiveBranch().length > this.option('countAllowBranch')){
                 $(target).prop('checked', false);
                 this.elements.branch.fendCategoryBranch('calcBadge');
-                ls.msg.error(this._i18n('countAllow', {count: this.option('countAllowBranch')}));
+                ls.msg.error(this._i18n('countAllowBranch', {count: this.option('countAllowBranch')}));
             }
         },
         

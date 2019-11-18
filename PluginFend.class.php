@@ -29,7 +29,8 @@ class PluginFend extends Plugin
     public function Init()
     {
         $this->Lang_AddLangJs([
-            'plugin.fend.category.msg.allow_count_branch'
+            'plugin.fend.category.msg.allow_count_branch',
+            'plugin.fend.category.msg.allow_count_way'
         ]);
 
         $this->Component_Add('fend:category');

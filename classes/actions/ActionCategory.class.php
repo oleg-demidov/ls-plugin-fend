@@ -73,8 +73,8 @@ class PluginFend_ActionCategory extends Action{
     public function EventShutdown() 
     {
         
-        
-        $this->Viewer_AssignJs('countAllowBranch', Config::Get('plugin.fend.counе_allow_branch'));
+        $this->Viewer_AssignJs('countAllowBranch', Config::Get('plugin.fend.count_allow_branch'));
+        $this->Viewer_AssignJs('countAllowWay', Config::Get('plugin.fend.count_allow_way'));
         $this->Viewer_Assign('userProfile', $this->oUserProfile);
     }
 }

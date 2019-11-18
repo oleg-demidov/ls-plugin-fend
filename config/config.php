@@ -34,6 +34,7 @@ $config['$root$']['block']['searchPeople'] = array(
     )
 );
 
-$config['counе_allow_branch'] = 1; //Максимальное количество направлений профессий
+$config['count_allow_branch'] = 1;  //Максимальное количество катеорий
+$config['count_allow_way'] = 3;     //Максимальное количество направлений профессий
 
 return $config;

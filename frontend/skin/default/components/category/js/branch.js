@@ -25,8 +25,7 @@
             // Селекторы
             selectors: {
                 badge:              '[data-badge]',
-                checkboxes:         'input[type="checkbox"]'
-                
+                ways:               '[data-category-way]'
             },
             // Классы
             classes: {
@@ -35,9 +34,11 @@
             },
             
             multiple: true,
+            countAllowWay:3,
             
 
             i18n: {
+                countAllowWay: null
             },
 
             // Доп-ые параметры передаваемые в аякс запросах
@@ -54,13 +55,24 @@
          */
         _create: function () {
             this._super();
+                        
+            this.elements.ways.fendCategoryWay({
+                change:this.change.bind(this)
+            });
             
-            this._on(this.elements.checkboxes, {change: 'change'});
         },
         
         change: function(event){
 
             this._trigger('change', event);
+            
+            let target = event.currentTarget;
+            
+            if(this.getActiveWays().length > this.option('countAllowWay')){
+                $(target).prop('checked', false);
+                ls.msg.error(this._i18n('countAllowWay', {count: this.option('countAllowWay')}));
+                return false;
+            }
             
             this.calcBadge();
         },
@@ -78,13 +90,24 @@
         },
         
         getActiveCheckboxes: function(){
-            return this.elements.checkboxes.filter(function(i, el){
-                return el.checked;
+            let $checkboxes = $();
+            
+            $.each(this.elements.ways, function(i, way){
+                $checkboxes = $checkboxes.add( $(way).fendCategoryWay('getActiveCheckboxes') );
             });
+            
+            return $checkboxes;
         },
         
         isActive: function(){
             return (this.getActiveCheckboxes().length > 0);
+        },
+        
+        getActiveWays: function()
+        {
+            return this.elements.ways.filter(function(i, el){
+                return $(el).fendCategoryWay('isActive');
+            })
         }
         
     });
