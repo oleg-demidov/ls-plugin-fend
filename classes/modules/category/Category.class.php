@@ -33,5 +33,52 @@ class PluginFend_ModuleCategory extends PluginFend__Inherits_ModuleCategory
             'target_type' => 'category_seo'
         ]
     ];
+    
+    public function GetWithParents(array $aCategories) {
+        
+        if(!$aCategories){
+            return [[],[],[]];
+        }
+        
+        $aCategoryRoot = $this->Category_GetCategoryItemsByFilter([
+            'pid' => null,
+            '#index-from' => 'id'
+        ]); 
+        
+        $aCategoryRootId = array_keys($aCategoryRoot);
+        
+        if(!is_object(current($aCategories))){
+            $aCategories = $this->Category_GetCategoryItemsByFilter([
+                'id in' => $aCategories
+            ]);
+        }
+        
+        $aCategory = [];
+        $aCategory1 = [];
+        $aCategory2 = [];
+        
+        /*
+         * Выбрать всех предков катеорий в отдельные места
+         */
+        foreach ($aCategories as $category) {
+            if(!$parent = $category->getParent()){
+                continue;
+            }
+
+            if(in_array($parent->getId(), $aCategoryRootId))
+            {
+                $aCategory[$parent->getId()]   = $parent; 
+                $aCategory1[$category->getId()]  = $category;
+                
+            }elseif(in_array($parent->getPid(), $aCategoryRootId))
+            {
+                $aCategory[$parent->getPid()]   = $parent->getParent(); 
+                $aCategory1[$parent->getId()]  = $parent;
+                $aCategory2[$category->getId()]  = $category;
+            }
+        }
+        
+        return [$aCategory, $aCategory1, $aCategory2];
+    }
 
 }

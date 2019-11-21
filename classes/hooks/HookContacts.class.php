@@ -13,7 +13,6 @@ class PluginFend_HookContacts extends Hook {
     }
 
     public function FieldsContacts($aParams) {
-        
         $this->Viewer_Assign('oUser', $aParams['oUser']);
         return $this->Viewer_Fetch('component@fend:contacts.input');
     }
