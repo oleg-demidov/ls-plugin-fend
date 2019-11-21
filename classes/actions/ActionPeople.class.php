@@ -44,9 +44,8 @@ class PluginFend_ActionPeople extends Action
         if($city = $this->PluginGeo_Geo_GetCityById(getRequest('geo')['city'])){
             $sUrlRedirect .= $city->getCode();
         }
-        
-        if(getRequest('category')){
-            $category = $this->Category_GetCategoryById(getRequest('category'));
+
+        if($category = $this->Category_GetCategoryById(getRequest('category'))){
             if (!$city) {
                 $sUrlRedirect .= 'all-city';
             }
@@ -61,6 +60,7 @@ class PluginFend_ActionPeople extends Action
         if ($aQueryParams) {
             $sUrlRedirect .= '?' . http_build_query($aQueryParams);
         }
+        
         
         Router::LocationAction($sUrlRedirect);
     }
@@ -96,6 +96,8 @@ class PluginFend_ActionPeople extends Action
             $aFilter['#geo'] = ['city' => $city->getId()];
             $this->Viewer_Assign('city', $city);
             $this->PluginSeo_Seo_SetVar('city' , $city->getName());
+        }elseif($sCodeCity != 'all-city' and $sCodeCity != ''){
+            Router::LocationAction($this->sCurrentAction);
         }
         
         if($this->GetParam(0)){

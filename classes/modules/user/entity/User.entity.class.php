@@ -36,5 +36,13 @@ class PluginFend_ModuleUser_EntityUser extends PluginFend_Inherits_ModuleUser_En
         parent::Init();
         
     }
+    
+    public function getCats() {
+        if($this->isRole('user')){
+            return $this->user_category->getCategories();
+        }else{
+            return $this->company_category->getCategories();
+        }
+    }
         
 }

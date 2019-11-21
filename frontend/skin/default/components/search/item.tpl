@@ -2,19 +2,57 @@
 
 {component_define_params params=[ 'oUser', 'url' , 'classes']}
 
-<div class="media mt-3 {$classes}">
-    <img style="width:50px;" class="mr-3 rounded-circle" src="{$oUser->getProfileAvatar()}" alt="{$oUser->getLogin()}">
-    <div class="media-body">
-        <div class="row">
-            <div class="col-sm-6 col-md-4">
-                <u><a href="{$url|default:$oUser->getProfileUrl()}" >{$oUser->getLogin()}</a></u><br>
-                {$oUser->getName()}
-            </div>
-            <div class="col-sm-6 mt-sm-0 mt-2 col-md-8">
-                {component "rating.stars" value=$oUser->getRating()}
+<div class="row align-items-center">
+    <div class="col-xl-3 col-sm-6 col-8">
+        <div class="media {$classes}">
+            <img style="width:50px;" class="mr-3 rounded-circle" src="{$oUser->getProfileAvatar()}" alt="{$oUser->getLogin()}">
+            <div class="media-body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <u><a href="{$url|default:$oUser->getProfileUrl()}" >{$oUser->getLogin()}</a></u><br>
+                        <span class="text-truncate">{$oUser->getName()}</span>
+                    </div>
+                    
+                </div>
 
             </div>
         </div>
-        
     </div>
-</div><hr>
+    <div class="col-xl-3 col-sm-6 col-4 align-self-start align-self-xl-center">
+        {$fRating = $oUser->getRating()}
+        {$iRated = $oUser->getCountRated()}
+
+        <div class="row" {if $textColor}style="color:{$textColor}!important;"{/if}>
+            <div class=" align-self-end d-none d-sm-block"><strong>{$fRating}</strong> из 5</div>
+            <div class="px-2">
+                {component "rating.stars" value=$oUser->getRating()}
+            </div>
+            <div class="align-self-end  d-none d-sm-block" style="line-height: 1.4rem;">
+                {$iRated} {pluralize {lang "user.profile.counts.responses"} count=$iRated}
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-2  col-4 text-success pl-xl-3 pl-4 pt-2">
+        {if $oUser->geo->get('city')}
+            {$oUser->geo->get('city')}
+        {else}
+            Город не выбран
+        {/if}
+    </div>
+    <div class="col-xl-4 col-8">
+        {if $oUser->isRole('user')}
+            {$sRole = 'people'}
+        {else}
+            {$sRole = 'company'}
+        {/if}
+
+        
+        {foreach $oUser->getCats() as $category}
+            {component "bs-button" 
+                text        = $category->getTitle()
+                url         = {router page="{$sRole}/all-city/{$category->getUrlFull()}"}
+            }
+        {/foreach}
+    </div>
+</div>
+<hr>
