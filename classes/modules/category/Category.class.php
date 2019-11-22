@@ -78,7 +78,24 @@ class PluginFend_ModuleCategory extends PluginFend__Inherits_ModuleCategory
             }
         }
         
+        
         return [$aCategory, $aCategory1, $aCategory2];
+    }
+    
+    public function SortByParent(array $aCategories, array &$aCategoriesSort) {
+        $aCategoriesResult = [];
+        
+        foreach ($aCategories as $category) 
+        {
+            foreach ($aCategoriesSort as $categorySort) 
+            {
+                if($categorySort->getPid() == $category->getId()){
+                    $aCategoriesResult[] = $categorySort;
+                }
+            }
+        }
+        
+        $aCategoriesSort =  $aCategoriesResult;
     }
 
 }
