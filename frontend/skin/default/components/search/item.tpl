@@ -33,8 +33,8 @@
         </div>
     </div>
     <div class="col-xl-2  col-4 text-success pl-xl-3 pl-4 pt-2">
-        {if $oUser->geo->get('city')}
-            {$oUser->geo->get('city')}
+        {if $oUser->geo->city()}
+            {$oUser->geo->city()->getName()}
         {else}
             Город не выбран
         {/if}

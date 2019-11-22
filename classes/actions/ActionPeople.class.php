@@ -28,10 +28,10 @@ class PluginFend_ActionPeople extends Action
         $this->AddEventPreg( '/^ajax-load$/i', 'EventAjaxLoad');
         
         $this->AddEventPreg( 
-            '/^([\w-]{3,100})?$/i', 
-            '/^([\w-]{3,100})?$/i', 
-            '/^([\w-]{3,100})?$/i', 
-            '/^([\w-]{3,100})?$/i', 
+            '/^([\w-]{1,100})?$/i', 
+            '/^([\w-]{1,100})?$/i', 
+            '/^([\w-]{1,100})?$/i', 
+            '/^([\w-]{1,100})?$/i', 
             ['EventSearch' , 'people']
         );
         
