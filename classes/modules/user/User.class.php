@@ -49,4 +49,9 @@ class PluginFend_ModuleUser extends PluginFend__Inherits_ModuleUser
         
     }
 
+    public function GetUserItemsByFilter($aFilter) {
+        
+        return parent::GetUserItemsByFilter($aFilter);
+        
+    }
 }
