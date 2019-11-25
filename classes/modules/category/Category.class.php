@@ -67,13 +67,22 @@ class PluginFend_ModuleCategory extends PluginFend__Inherits_ModuleCategory
 
             if(in_array($parent->getId(), $aCategoryRootId))
             {
+                $parent->setLevel(0);
                 $aCategory[$parent->getId()]   = $parent; 
+                
+                $category->setLevel(1);
                 $aCategory1[$category->getId()]  = $category;
                 
             }elseif(in_array($parent->getPid(), $aCategoryRootId))
             {
-                $aCategory[$parent->getPid()]   = $parent->getParent(); 
+                $parentRoot = $parent->getParent();
+                $parentRoot->setLevel(0);
+                $aCategory[$parent->getPid()]   = $parentRoot; 
+                
+                $parent->setLevel(1);
                 $aCategory1[$parent->getId()]  = $parent;
+                
+                $category->setLevel(2);
                 $aCategory2[$category->getId()]  = $category;
             }
         }
@@ -82,11 +91,12 @@ class PluginFend_ModuleCategory extends PluginFend__Inherits_ModuleCategory
         return [$aCategory, $aCategory1, $aCategory2];
     }
     
-    public function SortByParent(array $aCategories, array &$aCategoriesSort) {
+    public function SortByParent(array $aCategories, array $aCategoriesSort) {
         $aCategoriesResult = [];
         
         foreach ($aCategories as $category) 
         {
+            
             foreach ($aCategoriesSort as $categorySort) 
             {
                 if($categorySort->getPid() == $category->getId()){
@@ -95,7 +105,7 @@ class PluginFend_ModuleCategory extends PluginFend__Inherits_ModuleCategory
             }
         }
         
-        $aCategoriesSort =  $aCategoriesResult;
+        return  $aCategoriesResult;
     }
 
 }

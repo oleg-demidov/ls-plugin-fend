@@ -8,7 +8,8 @@ class PluginFend_HookProfileSettings extends Hook {
     public function RegisterHook() {
         $this->AddHook('menu_before_prepare', 'Menu');
         
-        $this->AddHook('template_profile_settings_end', 'SettingsGeo', null, 1000);
+        $this->AddHook('template_profile_settings_geo', 'SettingsGeo', null, 1000);
+        $this->AddHook('template_profile_settings_geo', 'SettingsGeoAllCity', null, 999);
     }
 
     public function Menu($aParams) { 
@@ -38,6 +39,21 @@ class PluginFend_HookProfileSettings extends Hook {
                 'plugin' => 'geo',
                 'target' => $aParams['oUser'],
                 'target_type' => 'user_geo',
+                'entity' => 'User_User'
+            ],
+            
+        ], $nll);
+        
+    }
+    
+    public function SettingsGeoAllCity($aParams) { 
+
+        return smarty_insert_block([
+            'block' => 'propertyUpdate',
+            'params' => [
+                'plugin' => 'property',
+                'target' => $aParams['oUser'],
+                'target_type' => 'field',
                 'entity' => 'User_User'
             ],
             

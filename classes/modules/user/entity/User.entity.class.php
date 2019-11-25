@@ -35,6 +35,11 @@ class PluginFend_ModuleUser_EntityUser extends PluginFend_Inherits_ModuleUser_En
             'target_type' => 'contacts'
         ];
         
+        $this->aBehaviors['field'] = [
+            'class' => PluginProperty_ModuleProperty_BehaviorEntity::class,
+            'target_type' => 'field'
+        ];
+        
         $this->aValidateRules[] = [
             'company_categories user_categories',
             'category',

@@ -48,10 +48,10 @@
         change: function(event)
         {
             this.elements.input
-                    .val($(event.target).data('title'))
+                    .val($(event.currentTarget).data('title'))
                     .change();
             this.elements.value
-                    .val($(event.target).data('id'))
+                    .val($(event.currentTarget).data('id'))
                     .removeAttr('disabled').change();
 
             this.elements.clear.removeClass('d-none');

@@ -136,7 +136,13 @@ class PluginFend_ActionPeople extends Action
                 Config::Get('plugin.fend.search.pagination.pages_count'), 
                 Router::GetPath('people'),
                 ['q' => 1]);
-
+        
+        $aCategoryRoot = $this->Category_GetCategoryItemsByFilter([
+            'pid' => null,
+            '#index-from' => 'id'
+        ]);
+        
+        $this->Viewer_Assign('aCategoryRootIds', array_keys($aCategoryRoot));
         $this->Viewer_Assign('sRole', $sRole);
         $this->Viewer_Assign('aPaging', $aPaging);
         $this->Viewer_Assign('aUsers', $aUsers['collection']);

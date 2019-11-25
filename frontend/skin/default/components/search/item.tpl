@@ -47,8 +47,20 @@
         {/if}
 
         
-        {foreach $oUser->getCats() as $category}
+        {foreach $oUser->getCats() as $category name="cats"}
+            {if $smarty.foreach.cats.iteration > Config::Get('plugin.fend.count_categories_item')}
+                {break}
+            {/if}
+            {if in_array($category->getId(), $aCategoryRootIds)}
+                {$categoryLevel = 0}
+            {/if}
+            
+            {if in_array($category->getPid(), $aCategoryRootIds)}
+                {$categoryLevel = 1}
+            {/if}
+            
             {component "bs-button" 
+                classes     = "bg-category-level{$categoryLevel} ml-1"
                 text        = $category->getTitle()
                 url         = {router page="{$sRole}/all-city/{$category->getUrlFull()}"}
             }

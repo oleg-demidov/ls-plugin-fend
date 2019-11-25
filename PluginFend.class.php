@@ -36,9 +36,9 @@ class PluginFend extends Plugin
         $this->Component_Add('fend:category');
         $this->Component_Add('fend:search');
         $this->Viewer_AppendScript(Plugin::GetTemplatePath(__CLASS__) . 'assets/js/init.js');
+        $this->Viewer_AppendStyle(Plugin::GetTemplatePath(__CLASS__) . 'assets/css/style.css');
         
        
-        
     }
 
     public function Activate()
@@ -46,6 +46,7 @@ class PluginFend extends Plugin
         $this->PluginProperty_Property_CreateTargetType('contacts', [
             'name' => 'Контакты'
         ]);
+        
         
         $aFields = array(
             array(
@@ -152,6 +153,29 @@ class PluginFend extends Plugin
             )
         );
         $this->PluginProperty_Property_CreateDefaultTargetPropertyFromPlugin($aFields, 'contacts');
+        
+        $this->PluginProperty_Property_CreateTargetType('field', [
+            'name' => 'Пользовательские поля'
+        ]);
+        
+        $this->PluginProperty_Property_CreateDefaultTargetPropertyFromPlugin([
+            array(
+                'data'=>array(
+                    'type'=>PluginProperty_ModuleProperty::PROPERTY_TYPE_CHECKBOX,
+                    'title'=>'По всей России',
+                    'code'=>'geo_all_city',
+                    'sort'=>100
+                ),
+                'validate_rule'=>array(
+                    
+                ),
+                'params'=>array(
+                    'default' => 0,
+                    'default_value' => '1'
+                ),
+                'additional'=>array()
+            )
+        ], 'field');
         
         $this->Category_CreateTargetType('user_category', 'Люди');
         $this->Category_CreateTargetType('company_category', 'Компании');
