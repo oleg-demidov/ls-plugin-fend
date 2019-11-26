@@ -97,6 +97,7 @@ class PluginFend_ActionPeople extends Action
             $this->Viewer_Assign('city', $city);
             $this->PluginSeo_Seo_SetVar('city' , $city->getName());
         }elseif($sCodeCity != 'all-city' and $sCodeCity != ''){
+            $this->PluginSeo_Seo_SetVar('city' , $this->Lang_Get('plugin.fend.search.all_city'));
             Router::LocationAction($this->sCurrentAction);
         }
         
