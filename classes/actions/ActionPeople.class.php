@@ -56,6 +56,7 @@ class PluginFend_ActionPeople extends Action
         
         if(getRequest('text')) $aQueryParams['text'] = getRequest('text');
         if(getRequest('page')) $aQueryParams['page'] = getRequest('page');
+        if(getRequest('order')) $aQueryParams['order'] = getRequest('order');
         
         if ($aQueryParams) {
             $sUrlRedirect .= '?' . http_build_query($aQueryParams);
@@ -85,7 +86,17 @@ class PluginFend_ActionPeople extends Action
             'activate'      => 1,
             'role'          => $sRole
         ];
-                
+        
+        if(getRequest('order') == 'responses'){
+            $aFilter['#order'] = [
+                'res.rescount' => 'desc'
+            ];
+        }else{
+            $aFilter['#order'] = [
+                'vote.rating' => 'desc'
+            ];
+        }  
+        
         $sCodeCity = $this->sCurrentEvent;
         
         $city = $this->PluginGeo_Geo_GetCityByFilter([
@@ -148,7 +159,11 @@ class PluginFend_ActionPeople extends Action
         $this->Viewer_Assign('aPaging', $aPaging);
         $this->Viewer_Assign('aUsers', $aUsers['collection']);
         $this->Viewer_Assign('count', $aUsers['count']);
+        $this->Viewer_Assign('order', getRequest('order'));
         $this->SetTemplateAction('search');
+        $this->Viewer_SetHtmlCanonical(Router::GetPathWebCurrent(), true);
+        
+        $this->Menu_Get('main')->setActiveItem($this->sCurrentAction);
     }
 
     public function EventAjaxCount() {

@@ -25,7 +25,9 @@
         <div class="row" {if $textColor}style="color:{$textColor}!important;"{/if}>
             <div class=" align-self-end d-none d-sm-block"><strong>{$fRating}</strong> из 5</div>
             <div class="px-2">
-                {component "rating.stars" value=$oUser->getRating()}
+                {component "rating.stars-float" 
+                    attributes  = ['data-star-width' => 20, 'data-spacing' => 3] 
+                    value       = $oUser->getRating()}
             </div>
             <div class="align-self-end  d-none d-sm-block" style="line-height: 1.4rem;">
                 {$iRated} {pluralize {lang "user.profile.counts.responses"} count=$iRated}
@@ -48,6 +50,7 @@
 
         
         {foreach $oUser->getCats() as $category name="cats"}
+            {$categoryLevel = 2}
             {if $smarty.foreach.cats.iteration > Config::Get('plugin.fend.count_categories_item')}
                 {break}
             {/if}

@@ -64,9 +64,10 @@ class PluginFend_ModuleUser extends PluginFend__Inherits_ModuleUser
         return parent::GetCountFromUserByFilter($aFilter);
     }
     
-    public function RewriteFilter($aFilter) {
-        
+    public function RewriteFilter($aFilter) 
+    {
         $entity = Engine::GetEntity('User_User');
+           
         
         if (array_key_exists('#geo', $aFilter)) {
             
@@ -118,7 +119,24 @@ class PluginFend_ModuleUser extends PluginFend__Inherits_ModuleUser
             unset($aFilter['#geo']);
         }
         
+        
+        $sJoin = "LEFT JOIN (SELECT count(*) as rescount, `target_id` FROM " . Config::Get('db.table.talk_response') . " WHERE `target_type` = 'user' AND `type` = 'response' GROUP BY `target_id`) res ON
+                    t.`{$entity->_getPrimaryKey()}` = res.target_id ";
+                    
+        $aFilter['#join'][$sJoin] = [];
+        
+        $sJoin = "LEFT JOIN (SELECT count(*) as count_vote, `target_id`, (SUM(`vote`) / count(*)) as rating  FROM " . Config::Get('db.table.rating_vote') . " GROUP BY `target_id`) vote ON
+                    t.`{$entity->_getPrimaryKey()}` = vote.target_id ";
+                    
+        $aFilter['#join'][$sJoin] = [];
+
+        $aFilter['#select'] = ['t.*','res.rescount', 'vote.rating'];
+                
         return $aFilter;
     }
+    
+
+      
+    
     
 }

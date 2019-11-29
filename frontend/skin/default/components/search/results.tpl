@@ -19,7 +19,7 @@
     {/foreach}
 
     {if !$aUsers}
-        {component "blankslate" text=$aLang.search.people.blankslate.text}
+        {component "blankslate" text=$aLang.plugin.fend.search.blankslate}
     {/if}
 
 </div>

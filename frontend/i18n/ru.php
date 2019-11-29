@@ -11,6 +11,7 @@ return [
         ]
     ],
     "search" => [
+        'blankslate' => 'Нет результатов',
         'title' => [
             'user' => 'Люди',
             'company' => 'Компании'

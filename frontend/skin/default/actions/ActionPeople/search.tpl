@@ -4,7 +4,9 @@
 {extends 'layouts/layout.base.tpl'}
 
 {block 'layout_page_title' }
-    {$aLang.plugin.fend.search.title.{$sRole}}
+{*    {$aLang.plugin.fend.search.title.{$sRole}}*}
+
+    {$h1}
 {/block}
 
 {block 'layout_content'}

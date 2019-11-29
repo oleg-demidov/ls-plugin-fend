@@ -27,16 +27,30 @@
             ]}
         </div>
     </div>
-    <div data-count-wrapper class="d-none justify-content-end">
-        <div class="d-flex align-items-center">
-            <div class="pr-3">Найдено 
-                <strong data-count-find></strong>
+    <div class="d-flex justify-content-between">
+        <div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="sort">
+                      {component "bs-icon" icon='sort-amount-down:s'}
+                  </label>
+                </div>
+                <select data-sort class="custom-select" id="sort" name="order">
+                    <option value="rating" {if $order == 'rating'}selected{/if}>По рейтингу</option>
+                  <option value="responses" {if $order == 'responses'}selected{/if}>По количеству отзывов</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div data-count-wrapper class="pr-3 d-none align-self-center">Найдено 
+                <strong data-count-find  class="pl-1"></strong>
             </div> 
-            {component "bs-button" 
-                type    = "submit"
-                bmods   = "primary" 
-                classes = "d-none"
-                text    = {lang 'plugin.fend.search.form.submit.text'}}
+            <div>
+                {component "bs-button" 
+                    type    = "submit"
+                    bmods   = "primary" 
+                    text    = {lang 'plugin.fend.search.form.submit.text'}}
+            </div>
         </div>
         
     </div>

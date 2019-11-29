@@ -44,6 +44,22 @@
             
             this._load('load', {}, function(result){
                 this.element.html(result.html);
+                
+                $(".rateYo", this.element).each(function (i, rateYo) {
+                    let $rateYo = $(rateYo);
+                    let rating = $rateYo.data('value');
+                    rating = rating && rating.replace(",", ".");
+
+                    $rateYo.rateYo({
+                        rating: rating,
+                        starWidth: $rateYo.data('starWidth') + "px",
+                        normalFill: "#A0A0A0",
+                        ratedFill: "#ffc107",
+                        readOnly: true,
+                        spacing: $rateYo.data('spacing') + "px",
+                    });
+                })
+                
                 this.initPagination();
             }.bind(this))
         },

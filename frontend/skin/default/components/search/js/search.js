@@ -28,7 +28,8 @@
                 category:          '[data-category-input]',
                 count:             '[data-count-find]',
                 countWrapper:      '[data-count-wrapper]',
-                results:           '@[data-people-results]'
+                results:           '@[data-people-results]',
+                sort:              '[data-sort]'
             }
 
         },
@@ -47,10 +48,15 @@
             this._on(this.elements.text, {keyup: "change"});
             this._on(this.elements.geo, {change: "change"});
             this._on(this.elements.category, {change: "change"});
+            this._on(this.elements.sort, {change: "submit"});
             
             this.mark();
             
             this.elements.results.fendResults();
+        },
+        
+        submit: function(){
+            this.element.submit();
         },
         
         mark: function(){
