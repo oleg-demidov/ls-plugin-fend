@@ -4,7 +4,7 @@ $config['$root$']['router']['page']['category'] = 'PluginFend_ActionCategory';
 $config['$root$']['router']['page']['people'] = 'PluginFend_ActionPeople';
 $config['$root$']['router']['page']['company'] = 'PluginFend_ActionPeople';
 
-$config['search']['per_page'] = 10; //
+$config['search']['per_page'] = 2; //
 $config['search']['pagination']['pages_count'] =2; //
 
 $config['$root$']['block']['settingsCategory'] = array(

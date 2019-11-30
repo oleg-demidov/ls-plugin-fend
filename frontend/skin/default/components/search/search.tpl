@@ -42,8 +42,8 @@
             </div>
         </div>
         <div class="d-flex">
-            <div data-count-wrapper class="pr-3 d-none align-self-center">Найдено 
-                <strong data-count-find  class="pl-1"></strong>
+            <div data-count-wrapper class="pr-3 {if !$count}d-none{/if} align-self-center">Найдено 
+                <strong data-count-find  class="pl-1">{$count}</strong>
             </div> 
             <div>
                 {component "bs-button" 

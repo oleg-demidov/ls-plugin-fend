@@ -51,19 +51,33 @@ class PluginFend_ModuleUser extends PluginFend__Inherits_ModuleUser
 
     public function GetUserItemsByFilter($aFilter) {
         
+        $entity = Engine::GetEntity('User_User');
+        
+        $sJoin = "LEFT JOIN (SELECT count(*) as rescount, `target_id` FROM " . Config::Get('db.table.talk_response') . " WHERE `target_type` = 'user' AND `type` = 'response' GROUP BY `target_id`) res ON
+                    t.`{$entity->_getPrimaryKey()}` = res.target_id ";
+                    
+        $aFilter['#join'][$sJoin] = [];
+        
+        $sJoin = "LEFT JOIN (SELECT count(*) as count_vote, `target_id`, (SUM(`vote`) / count(*)) as rating  FROM " . Config::Get('db.table.rating_vote') . " GROUP BY `target_id`) vote ON
+                    t.`{$entity->_getPrimaryKey()}` = vote.target_id ";
+                    
+        $aFilter['#join'][$sJoin] = [];
+
+        $aFilter['#select'] = ['distinct t.*','res.rescount', 'vote.rating'];
+        
         $aFilter = $this->RewriteFilter($aFilter);
         
         return parent::GetUserItemsByFilter($aFilter);
         
     }
     
-    public function GetCountFromUserByFilter($aFilter) {
+    public function GetCountFromUsers($aFilter) { 
         
         $aFilter = $this->RewriteFilter($aFilter);
         
         return parent::GetCountFromUserByFilter($aFilter);
     }
-    
+
     public function RewriteFilter($aFilter) 
     {
         $entity = Engine::GetEntity('User_User');
@@ -73,7 +87,7 @@ class PluginFend_ModuleUser extends PluginFend__Inherits_ModuleUser
             
             
             
-            $sJoin = "JOIN " . Config::Get('db.table.geo_geo_target') . " gt ON
+            $sJoin = "LEFT JOIN " . Config::Get('db.table.geo_geo_target') . " gt ON
                     t.`{$entity->_getPrimaryKey()}` = gt.target_id and
                     gt.target_type = '{$entity->geo->getParam('target_type')}'"
                     . " JOIN " . Config::Get('db.table.property_property') . " pr ON"
@@ -112,26 +126,26 @@ class PluginFend_ModuleUser extends PluginFend__Inherits_ModuleUser
                 $aGeo[] = $aFilter['#geo']['city'];
             }            
             
-            $sKey = "({$sKey}) OR pv.value_int = 1";
+            $sKey = "(({$sKey}) OR pv.value_int = 1)";
             
             $aFilter['#where'][$sKey] = $aGeo;
             
             unset($aFilter['#geo']);
         }
         
+        if(array_key_exists('#query', $aFilter)){
+            $aFilter['#where'] = [
+                '(t.login LIKE ? OR t.mail LIKE ? OR t.about LIKE ? OR t.name LIKE ?)' => [
+                    '%'.getRequest('text').'%',
+                    '%'.getRequest('text').'%',
+                    '%'.getRequest('text').'%',
+                    '%'.getRequest('text').'%'
+                ]
+            ];
+        }
         
-        $sJoin = "LEFT JOIN (SELECT count(*) as rescount, `target_id` FROM " . Config::Get('db.table.talk_response') . " WHERE `target_type` = 'user' AND `type` = 'response' GROUP BY `target_id`) res ON
-                    t.`{$entity->_getPrimaryKey()}` = res.target_id ";
-                    
-        $aFilter['#join'][$sJoin] = [];
-        
-        $sJoin = "LEFT JOIN (SELECT count(*) as count_vote, `target_id`, (SUM(`vote`) / count(*)) as rating  FROM " . Config::Get('db.table.rating_vote') . " GROUP BY `target_id`) vote ON
-                    t.`{$entity->_getPrimaryKey()}` = vote.target_id ";
-                    
-        $aFilter['#join'][$sJoin] = [];
-
-        $aFilter['#select'] = ['t.*','res.rescount', 'vote.rating'];
-                
+         
+         
         return $aFilter;
     }
     

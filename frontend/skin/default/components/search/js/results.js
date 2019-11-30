@@ -15,7 +15,7 @@
         options: {
             // Ссылки
             urls: {
-                load: aRouter.people.replace('people', 'people/') + 'ajax-load'               
+                load: aRouter.people + 'ajax-load'               
             },
             
             // Селекторы
@@ -39,10 +39,8 @@
         },
         
         goPage: function(event, url){
-
-            this.option('urls.load', url.replace('people', 'people/ajax-load'));
             
-            this._load('load', {}, function(result){
+            this._load('load', { url: url}, function(result){
                 this.element.html(result.html);
                 
                 $(".rateYo", this.element).each(function (i, rateYo) {

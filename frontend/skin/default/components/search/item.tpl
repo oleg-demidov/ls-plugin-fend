@@ -38,7 +38,12 @@
         {if $oUser->geo->city()}
             {$oUser->geo->city()->getName()}
         {else}
-            Город не выбран
+            {if $oUser->field->getPropertyValue('geo_all_city')}
+                Все города
+            {else}
+                Город не выбран
+            {/if}
+            
         {/if}
     </div>
     <div class="col-xl-4 col-8">

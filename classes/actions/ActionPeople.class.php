@@ -79,6 +79,8 @@ class PluginFend_ActionPeople extends Action
         $iPage = getRequest('page');
         $iPage = $iPage?$iPage:1;
         
+        $aQueryParams = [];
+        
         $aFilter = [
             '#index-from'   => 'id',
             '#page'         => [$iPage, $iLimit],
@@ -91,10 +93,12 @@ class PluginFend_ActionPeople extends Action
             $aFilter['#order'] = [
                 'res.rescount' => 'desc'
             ];
+            $aQueryParams['order'] = 'responses';
         }else{
             $aFilter['#order'] = [
                 'vote.rating' => 'desc'
             ];
+            $aQueryParams['order'] = 'rating';
         }  
         
         $sCodeCity = $this->sCurrentEvent;
@@ -103,11 +107,14 @@ class PluginFend_ActionPeople extends Action
             'code' => $sCodeCity
         ]);
                 
-        if($city){
+        if($city)
+        {
             $aFilter['#geo'] = ['city' => $city->getId()];
             $this->Viewer_Assign('city', $city);
             $this->PluginSeo_Seo_SetVar('city' , $city->getName());
-        }elseif($sCodeCity != 'all-city' and $sCodeCity != ''){
+            
+        }elseif($sCodeCity != 'all-city' and $sCodeCity != '')
+        {
             $this->PluginSeo_Seo_SetVar('city' , $this->Lang_Get('plugin.fend.search.all_city'));
             Router::LocationAction($this->sCurrentAction);
         }
@@ -124,30 +131,24 @@ class PluginFend_ActionPeople extends Action
             
             $this->Viewer_Assign('category', $category);
             
-            
         }
         
-        if(getRequest('text')){
-            $aFilter['#where'] = [
-                '(t.login LIKE ? OR t.mail LIKE ? OR t.about LIKE ? OR t.name LIKE ?)' => [
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%'
-                ]
-            ];
+        if(getRequest('text'))
+        {
+            $aFilter['#query'] = getRequest('text');
             
             $this->Viewer_Assign('sText', getRequest('text'));
         }
                 
-        $aUsers = $this->User_GetUserItemsByFilter($aFilter);
+        $aUsers = $this->User_GetUserItemsByFilter($aFilter);       
+        
                 
         $aPaging = $this->Viewer_MakePaging(
                 $aUsers['count'], 
                 $iPage, $iLimit, 
                 Config::Get('plugin.fend.search.pagination.pages_count'), 
-                Router::GetPath('people'),
-                ['q' => 1]);
+                Router::GetPathWebCurrent(),
+                $aQueryParams);
         
         $aCategoryRoot = $this->Category_GetCategoryItemsByFilter([
             'pid' => null,
@@ -174,15 +175,9 @@ class PluginFend_ActionPeople extends Action
             'role'          => getRequest('role')
         ];
         
-        if(getRequest('text')){
-            $aFilter['#where'] = [
-                '(t.login LIKE ? OR t.mail LIKE ? OR t.about LIKE ? OR t.name LIKE ?)' => [
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%'
-                ]
-            ];
+        if(getRequest('text'))
+        {
+            $aFilter['#query'] = getRequest('text');
         }
         
         if(getRequest('geo') and getRequest('geo')['city']){
@@ -193,83 +188,102 @@ class PluginFend_ActionPeople extends Action
             $aFilter['#' . getRequest('role') . '_category'] = [getRequest('category')];
         }
         
-        $iCount = $this->User_GetCountFromUserByFilter($aFilter);
+        $iCount = $this->User_GetCountFromUsers($aFilter);
         
         $this->Viewer_AssignAjax('count', $iCount);
     }
     
     public function EventAjaxLoad() {
         $this->Viewer_SetResponseAjax('json');
-        
-        if($this->sCurrentAction == 'people'){
-            $sRole = "user";
-        }else{
-            $sRole = 'company';
-        }
-        
-        $iLimit = Config::Get('plugin.fend.search.per_page');
                 
-        $iPage = getRequest('page');
-        $iPage = $iPage?$iPage:1;
-        
         $aFilter = [
             '#index-from'   => 'id',
-            '#page'         => [$iPage, $iLimit],
-            '#with'         => ["#{$sRole}_category", '#geo'],
+            '#with'         => ['#geo'],
             'activate'      => 1,
-            'role'          => $sRole
         ];
+        
+        $aUrl = parse_url(getRequest('url'));
+        
+        if(!$aUrl['host']){
+            return false;
+        }
                 
-        $sCodeCity = $this->GetParam(0);
+        $aRequestUrl =  explode('/', trim($aUrl['path'], '/'));
+
+        if(!isset($aRequestUrl[0])){
+            return false;
+        }        
         
-        if($city = $this->PluginGeo_Geo_GetCityByCode($sCodeCity)){
+        if(array_shift($aRequestUrl) == 'people'){
+            $aFilter['role'] = "user";
+            
+        }else{
+            $aFilter['role'] = 'company';
+        }
+        
+        $aFilter['#with'][] = "#{$aFilter['role']}_category";
+        
+        $sCodeCity = isset($aRequestUrl[0]) ? array_shift($aRequestUrl) : '';
+        
+        $city = $this->PluginGeo_Geo_GetCityByFilter([
+            'code' => $sCodeCity
+        ]);
+                
+        if($city)
+        {
             $aFilter['#geo'] = ['city' => $city->getId()];
-            $this->Viewer_Assign('city', $city);
-        }
-        
-        if($this->GetParam(1)){
-            $aParams = $this->GetParams();
-            shift($aParams);
-            $sUrl = join('/', $aParams);
-            
-            $category = $this->Category_GetCategoryByUrlFull($sUrl);
-            
-            $aFilter["#{$sRole}_category"] = [$category->getId()];
-            
-            $this->Viewer_Assign('category', $category);
-            
             
         }
         
-        if(getRequest('text')){
-            $aFilter['#where'] = [
-                '(t.login LIKE ? OR t.mail LIKE ? OR t.about LIKE ? OR t.name LIKE ?)' => [
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%',
-                    '%'.getRequest('text').'%'
-                ]
-            ];
+        if(isset($aRequestUrl[0])){
             
-            $this->Viewer_Assign('sText', getRequest('text'));
+            $category = $this->Category_GetCategoryByFilter([
+                'url_full'  => join('/', $aRequestUrl)
+            ]);
+            
+            $aFilter["#{$aFilter['role']}_category"] = [$category->getId()];
+            
         }
+        
+        $aRequestQuery = [];
+        
+        parse_str($aUrl['query'], $aRequestQuery);
+        
+        if(array_key_exists('text', $aRequestQuery))
+        {
+            $aFilter['#query'] = $aRequestQuery['text'];
+        }
+        
+        if(array_key_exists('page', $aRequestQuery))
+        {
+            $aFilter['#page'][] = $aRequestQuery['page'];
+        }else{
+            $aFilter['#page'][] = 1;
+        }
+        
+        $aFilter['#page'][] = Config::Get('plugin.fend.search.per_page');
+        
+        unset($aRequestQuery['page']);
                 
         $aUsers = $this->User_GetUserItemsByFilter($aFilter);
                 
         $aPaging = $this->Viewer_MakePaging(
                 $aUsers['count'], 
-                $iPage, $iLimit, 
+                $aFilter['#page'][0], $aFilter['#page'][1], 
                 Config::Get('plugin.fend.search.pagination.pages_count'), 
-                Router::GetPath('people'),
-                ['q' => 1]);
+                $aUrl['scheme'] . '://' . $aUrl['host'] . '/' . $aUrl['path'],
+                $aRequestQuery);
 
-        $viewer = $this->Viewer_GetLocalViewer('sRole', $sRole);
-        $viewer->Assign('sRole', $sRole);
+        $viewer = $this->Viewer_GetLocalViewer();
         $viewer->Assign('aPaging', $aPaging);
         $viewer->Assign('aUsers', $aUsers['collection']);
         $viewer->Assign('count', $aUsers['count']);
         
         $this->Viewer_AssignAjax('html', $viewer->Fetch('component@fend:search.results'));
+        
+    }
+    
+    protected function getByFilter($param) {
         
     }
     
